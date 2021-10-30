@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
+import Button from "./Button";
 const StyledSection = styled.section`
   background: rgba(0, 0, 0, 0.3);
   position: fixed;
@@ -13,9 +14,27 @@ const StyledSection = styled.section`
   align-items: center;
   & > div {
     width: 70%;
-    height: 70%;
+    height: 80%;
+    max-width: 675px;
+    max-height: 510px;
     /* padding: 200px; */
     background: white;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    & > div {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      section:nth-of-type(2) {
+      }
+    }
+  }
+  #close-modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 20px;
   }
 `;
 
@@ -38,7 +57,7 @@ const Modal = ({ closeModal, children }) => {
     <StyledSection onClick={closeOnOverlay} data-id="closeLayer">
       <div>
         <div>{children}</div>
-        <button onClick={closeModal}>Close</button>
+        {/* <Button action={closeModal} id="close-modal" text="Close" /> */}
       </div>
     </StyledSection>,
     document.getElementById("portal")
