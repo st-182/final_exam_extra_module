@@ -1,37 +1,26 @@
 import React, { useEffect, useState } from "react";
 
 const RegistrationValidation = ({
-  validationType,
-  id,
-  label,
-  render,
   controlRef,
-  img,
-  invalid,
-  valid,
-  message,
+  value,
+  label,
+  isSubmitted,
+  render,
 }) => {
-  const validation = (controlRef, label) => {};
+  const [message, setMessage] = useState(false);
   useEffect(() => {
-    // validation(controlRef, label);
-    // switch (validationType) {
-    //   case "name":
-    //     break;
-    //   default:
-    //     break;
-    // }
-  }, [validationType]);
+    if (controlRef && isSubmitted) {
+      if (controlRef.current.value.length < 1) {
+        controlRef.current.style.outline = "3px solid red";
+        setMessage(`${label} cannot be blank`);
+      } else {
+        controlRef.current.style.outline = "3px solid green";
+        setMessage(``);
+      }
+    }
+  }, [value, isSubmitted]);
 
-  return render(
-    controlRef,
-    id,
-    label,
-    message,
-    img,
-    validation,
-    invalid,
-    valid
-  );
+  return render(message);
 };
 
 export default RegistrationValidation;

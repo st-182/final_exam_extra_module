@@ -40,33 +40,29 @@ const StyledFormSection = styled.section`
 `;
 const Form = ({ validationFunc }) => {
   // Hooks
-  const [messageName, setMessageName] = useState("");
-  const [messageEmail, setMessageEmail] = useState("");
-  const [messagePassword, setMessagePassword] = useState("");
-  // -Side Effects
-  useEffect(() => {
-    nameInputRef.current.focus();
-  }, []);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
   // -Refs
   const nameInputRef = useRef();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  // -Side Effects
+  useEffect(() => {
+    nameInputRef.current.focus();
+  }, []);
   //Custom Functions
-  const [validationType, setValidationType] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    setValidationType({
-      name: "name",
-      email: "email",
-      password: "password",
-    });
-    setMessageName(validationFunc(nameInputRef, "Name"));
-    setMessageEmail(validationFunc(nameInputRef, "Email"));
-    setMessagePassword(validationFunc(nameInputRef, "Password"));
+    setIsSubmitted(true);
+    if (name.length < 1 || email.length < 1 || password.length < 1) {
+      return console.log("wont work");
+    }
+    console.log(e.target[0].value);
+    console.log(e.target[1].value);
+    console.log(e.target[2].value);
   };
 
   return (
@@ -88,92 +84,66 @@ const Form = ({ validationFunc }) => {
       <h3>Or</h3>
       <form onSubmit={handleOnSubmit}>
         <RegistrationValidation
-          validationType={validationType.name}
-          id="name"
+          controlRef={nameInputRef}
+          value={name}
           label="Name"
-          img={person}
-          invalid={messageName ? true : false}
-          valid={!messageName ? true : false}
-          message={messageName}
-          render={(
-            controlRef,
-            id,
-            label,
-            message,
-            validation,
-            img,
-            invalid,
-            valid
-          ) => (
+          isSubmitted={isSubmitted}
+          render={(message) => (
             <Input
               controlRef={nameInputRef}
-              id={id}
-              label={label}
-              validation={validation}
-              img={img}
-              invalid={invalid}
-              valid={valid}
+              id="name"
+              type="text"
+              label="Name"
+              img={person}
+              placeholder="Alex Jonson"
+              value={name}
+              action={() => {
+                setName(nameInputRef.current.value);
+              }}
               message={message}
             />
           )}
         />
         <RegistrationValidation
-          validationType={validationType.email}
-          id="email"
+          controlRef={emailInputRef}
+          value={email}
           label="Email"
-          img={mail}
-          invalid={messageEmail ? true : false}
-          valid={!messageEmail ? true : false}
-          message={messageEmail}
-          render={(
-            controlRef,
-            id,
-            label,
-            message,
-            validation,
-            img,
-            invalid,
-            valid
-          ) => (
+          isSubmitted={isSubmitted}
+          render={(message) => (
             <Input
-              controlRef={nameInputRef}
-              id={id}
-              label={label}
-              validation={validation}
-              img={img}
-              invalid={invalid}
-              valid={valid}
+              controlRef={emailInputRef}
+              id="email"
+              type="email"
+              label="Email"
+              img={mail}
+              placeholder="alex.j@gmail.com"
+              value={email}
+              action={() => {
+                setEmail(emailInputRef.current.value);
+              }}
               message={message}
             />
           )}
         />
 
         <RegistrationValidation
-          validationType={validationType.email}
-          id="password"
+          controlRef={passwordInputRef}
+          value={password}
           label="Password"
-          img={lock}
-          invalid={messagePassword ? true : false}
-          valid={!messagePassword ? true : false}
-          message={messagePassword}
-          render={(
-            controlRef,
-            id,
-            label,
-            message,
-            validation,
-            img,
-            invalid,
-            valid
-          ) => (
+          isSubmitted={isSubmitted}
+          render={(message) => (
             <Input
-              controlRef={nameInputRef}
-              id={id}
-              label={label}
-              validation={validation}
-              img={img}
-              invalid={invalid}
-              valid={valid}
+              controlRef={passwordInputRef}
+              value={password}
+              id="password"
+              type="password"
+              label="Password"
+              img={lock}
+              placeholder="*********"
+              value={password}
+              action={() => {
+                setPassword(passwordInputRef.current.value);
+              }}
               message={message}
             />
           )}

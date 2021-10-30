@@ -3,7 +3,6 @@ import { GlobalStyle } from "./GlobalStyles";
 import Form from "./components/Form";
 import ImageNearForm from "./components/ImageNearForm";
 import Modal from "./components/Modal";
-import ValidationForForm from "./components/ValidationForForm";
 import Button from "./components/Button";
 
 function App() {
@@ -28,11 +27,7 @@ function App() {
             }}
           >
             <ImageNearForm />
-            <ValidationForForm
-              render={(validationFunc) => (
-                <Form validationFunc={validationFunc} />
-              )}
-            />
+            <Form />
           </Modal>
         )}
       </main>

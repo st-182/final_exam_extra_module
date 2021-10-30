@@ -1,17 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 const StyledInput = styled.input`
+  outline: none;
   background: url("${({ img }) => img}") no-repeat 0 100%;
-  border: 1px solid gray;
+  border: 2px solid rgba(0, 0, 0, 0.2);
   background-size: 0.7rem 0.7rem;
   background-position: 10px 50%;
   padding: 3px 25px;
   border-radius: 3px;
   :focus {
-    border: 1px solid #f2877d;
+    border: 2px solid #f2877d;
   }
-  ${({ invalid }) => invalid && "outline:3px solid red"}
-  ${({ valid }) => valid && "outline:3px solid green"}
 `;
 const StyledDiv = styled.div`
   p {
@@ -22,23 +21,24 @@ const Input = ({
   controlRef,
   id,
   label,
-  message,
+  type,
   img,
-  validation,
-  invalid,
-  valid,
+  placeholder,
+  value,
+  action,
+  message,
 }) => {
   return (
     <StyledDiv>
       <label htmlFor={id}>{label}</label>
       <StyledInput
-        type="text"
+        placeholder={placeholder}
+        type={type}
         id={id}
         ref={controlRef}
-        onchange={validation}
         img={img}
-        invalid={invalid}
-        valid={valid}
+        value={value}
+        onChange={action}
       />
       {message && <p>{message}</p>}
     </StyledDiv>
